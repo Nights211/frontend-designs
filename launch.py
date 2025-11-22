@@ -83,13 +83,17 @@ def launch_html(example_name):
         return
     
     print(f"\n🚀 Launching {example_name}...")
-    print("📡 Starting server on http://localhost:8000")
+    print("📡 Server running at http://localhost:8000")
     print("Press Ctrl+C to stop and return to menu\n")
     
-    time.sleep(1)
-    webbrowser.open('http://localhost:8000')
-    
     os.chdir(example_path)
+    
+    # Try to open browser, but don't fail if it doesn't work
+    try:
+        webbrowser.open('http://localhost:8000')
+    except:
+        pass
+    
     try:
         subprocess.run(['python3', '-m', 'http.server', '8000'])
     except KeyboardInterrupt:
