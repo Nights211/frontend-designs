@@ -20,17 +20,17 @@ def find_examples():
     # HTML examples
     html_dir = BASE_DIR / 'html-css-js'
     if html_dir.exists():
-        examples['html'] = [d.name for d in html_dir.iterdir() if d.is_dir()]
+        examples['html'] = sorted([d.name for d in html_dir.iterdir() if d.is_dir()])
     
     # TypeScript examples
     ts_dir = BASE_DIR / 'typescript-designs'
     if ts_dir.exists():
-        examples['typescript'] = [d.name for d in ts_dir.iterdir() if d.is_dir()]
+        examples['typescript'] = sorted([d.name for d in ts_dir.iterdir() if d.is_dir()])
     
     # Python frontends
     py_dir = BASE_DIR / 'python-frontends'
     if py_dir.exists():
-        for d in py_dir.iterdir():
+        for d in sorted(py_dir.iterdir()):
             if d.is_dir():
                 if (d / 'app.py').exists():
                     with open(d / 'app.py') as f:
@@ -166,23 +166,21 @@ def interactive_menu():
     while True:
         examples = find_examples()
         
-        # Build menu options
-        options = []
-        if examples['html']:
-            for ex in examples['html']:
-                options.append(('html', ex))
-        if examples['typescript']:
-            for ex in examples['typescript']:
-                options.append(('typescript', ex))
-        if examples['gradio']:
-            for ex in examples['gradio']:
-                options.append(('gradio', ex))
-        if examples['streamlit']:
-            for ex in examples['streamlit']:
-                options.append(('streamlit', ex))
+        # Build menu options with numbers extracted from names
+        options = {}  # number -> (type, name)
+        
+        for typ in ['html', 'typescript', 'gradio', 'streamlit']:
+            for ex in examples[typ]:
+                # Extract number from name (e.g., landing-page-03 -> 3)
+                import re
+                match = re.search(r'-(\d+)$', ex)
+                if match:
+                    num = int(match.group(1))
+                    options[num] = (typ, ex)
         
         # Check if backend exists
         backend_exists = (BASE_DIR / 'backend' / 'main.py').exists()
+        backend_num = 99  # Use 99 for backend
         
         if not options and not backend_exists:
             print("❌ No examples found")
@@ -190,22 +188,15 @@ def interactive_menu():
         
         print("\n🚀 Frontend Designs Launcher\n")
         
-        # Display menu
-        idx = 1
-        max_idx = len(options) + (1 if backend_exists else 0)
-        width = len(str(max_idx))
-        
-        for typ, name in options:
-            print(f"  {idx:>{width}}. [{typ.upper()}] {name}")
-            idx += 1
+        # Display menu sorted by number
+        for num in sorted(options.keys()):
+            typ, name = options[num]
+            print(f"  {num:>2}. [{typ.upper()}] {name}")
         
         if backend_exists:
-            print(f"  {idx:>{width}}. [BACKEND] FastAPI Backend")
-            backend_idx = idx
-        else:
-            backend_idx = None
+            print(f"  {backend_num:>2}. [BACKEND] FastAPI Backend")
         
-        print(f"  {0:>{width}}. Exit\n")
+        print(f"   0. Exit\n")
         
         # Get user choice
         try:
@@ -215,10 +206,10 @@ def interactive_menu():
                 print("👋 Goodbye!")
                 return
             
-            if backend_idx and choice == backend_idx:
+            if backend_exists and choice == backend_num:
                 launch_backend()
-            elif 1 <= choice <= len(options):
-                typ, name = options[choice - 1]
+            elif choice in options:
+                typ, name = options[choice]
                 if typ == 'html':
                     launch_html(name)
                 elif typ == 'gradio':
