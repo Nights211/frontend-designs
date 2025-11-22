@@ -135,9 +135,74 @@ def launch_backend():
     os.chdir(backend_path)
     subprocess.run(['uvicorn', 'main:app', '--reload'])
 
+def interactive_menu():
+    """Interactive menu for selecting examples"""
+    examples = find_examples()
+    
+    # Build menu options
+    options = []
+    if examples['html']:
+        for ex in examples['html']:
+            options.append(('html', ex))
+    if examples['typescript']:
+        for ex in examples['typescript']:
+            options.append(('typescript', ex))
+    if examples['gradio']:
+        for ex in examples['gradio']:
+            options.append(('gradio', ex))
+    if examples['streamlit']:
+        for ex in examples['streamlit']:
+            options.append(('streamlit', ex))
+    
+    # Check if backend exists
+    backend_exists = (BASE_DIR / 'backend' / 'main.py').exists()
+    
+    if not options and not backend_exists:
+        print("❌ No examples found")
+        return
+    
+    print("\n🚀 Frontend Designs Launcher\n")
+    
+    # Display menu
+    idx = 1
+    for typ, name in options:
+        print(f"  {idx}. [{typ.upper()}] {name}")
+        idx += 1
+    
+    if backend_exists:
+        print(f"  {idx}. [BACKEND] FastAPI Backend")
+        backend_idx = idx
+    else:
+        backend_idx = None
+    
+    print(f"  0. Exit\n")
+    
+    # Get user choice
+    try:
+        choice = int(input("Select an option: "))
+        
+        if choice == 0:
+            print("👋 Goodbye!")
+            return
+        
+        if backend_idx and choice == backend_idx:
+            launch_backend()
+        elif 1 <= choice <= len(options):
+            typ, name = options[choice - 1]
+            if typ == 'html':
+                launch_html(name)
+            elif typ == 'gradio':
+                launch_gradio(name)
+            elif typ == 'streamlit':
+                launch_streamlit(name)
+        else:
+            print("❌ Invalid option")
+    except (ValueError, KeyboardInterrupt):
+        print("\n👋 Goodbye!")
+
 def main():
     if len(sys.argv) < 2:
-        list_examples()
+        interactive_menu()
         return
     
     command = sys.argv[1]
