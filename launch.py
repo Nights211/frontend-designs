@@ -82,15 +82,18 @@ def launch_html(example_name):
         print(f"❌ Example '{example_name}' not found")
         return
     
-    print(f"🚀 Launching {example_name}...")
+    print(f"\n🚀 Launching {example_name}...")
     print("📡 Starting server on http://localhost:8000")
-    print("Press Ctrl+C to stop\n")
+    print("Press Ctrl+C to stop and return to menu\n")
     
     time.sleep(1)
     webbrowser.open('http://localhost:8000')
     
     os.chdir(example_path)
-    subprocess.run(['python3', '-m', 'http.server', '8000'])
+    try:
+        subprocess.run(['python3', '-m', 'http.server', '8000'])
+    except KeyboardInterrupt:
+        print("\n\n✅ Server stopped")
 
 def launch_gradio(example_name):
     """Launch Gradio app"""
@@ -101,9 +104,13 @@ def launch_gradio(example_name):
         print(f"❌ Example '{example_name}' not found")
         return
     
-    print(f"🚀 Launching {example_name}...")
+    print(f"\n🚀 Launching {example_name}...")
+    print("Press Ctrl+C to stop and return to menu\n")
     os.chdir(example_path)
-    subprocess.run(['python3', 'app.py'])
+    try:
+        subprocess.run(['python3', 'app.py'])
+    except KeyboardInterrupt:
+        print("\n\n✅ App stopped")
 
 def launch_streamlit(example_name):
     """Launch Streamlit app"""
@@ -114,9 +121,13 @@ def launch_streamlit(example_name):
         print(f"❌ Example '{example_name}' not found")
         return
     
-    print(f"🚀 Launching {example_name}...")
+    print(f"\n🚀 Launching {example_name}...")
+    print("Press Ctrl+C to stop and return to menu\n")
     os.chdir(example_path)
-    subprocess.run(['streamlit', 'run', 'app.py'])
+    try:
+        subprocess.run(['streamlit', 'run', 'app.py'])
+    except KeyboardInterrupt:
+        print("\n\n✅ App stopped")
 
 def launch_backend():
     """Launch FastAPI backend"""
@@ -127,78 +138,83 @@ def launch_backend():
         print("❌ Backend not set up yet (backend/main.py not found)")
         return
     
-    print("🚀 Launching FastAPI backend...")
+    print("\n🚀 Launching FastAPI backend...")
     print("📡 API will be available at http://localhost:8000")
     print("📚 Docs at http://localhost:8000/docs")
-    print("Press Ctrl+C to stop\n")
+    print("Press Ctrl+C to stop and return to menu\n")
     
     os.chdir(backend_path)
-    subprocess.run(['uvicorn', 'main:app', '--reload'])
+    try:
+        subprocess.run(['uvicorn', 'main:app', '--reload'])
+    except KeyboardInterrupt:
+        print("\n\n✅ Backend stopped")
 
 def interactive_menu():
     """Interactive menu for selecting examples"""
-    examples = find_examples()
-    
-    # Build menu options
-    options = []
-    if examples['html']:
-        for ex in examples['html']:
-            options.append(('html', ex))
-    if examples['typescript']:
-        for ex in examples['typescript']:
-            options.append(('typescript', ex))
-    if examples['gradio']:
-        for ex in examples['gradio']:
-            options.append(('gradio', ex))
-    if examples['streamlit']:
-        for ex in examples['streamlit']:
-            options.append(('streamlit', ex))
-    
-    # Check if backend exists
-    backend_exists = (BASE_DIR / 'backend' / 'main.py').exists()
-    
-    if not options and not backend_exists:
-        print("❌ No examples found")
-        return
-    
-    print("\n🚀 Frontend Designs Launcher\n")
-    
-    # Display menu
-    idx = 1
-    for typ, name in options:
-        print(f"  {idx}. [{typ.upper()}] {name}")
-        idx += 1
-    
-    if backend_exists:
-        print(f"  {idx}. [BACKEND] FastAPI Backend")
-        backend_idx = idx
-    else:
-        backend_idx = None
-    
-    print(f"  0. Exit\n")
-    
-    # Get user choice
-    try:
-        choice = int(input("Select an option: "))
+    while True:
+        examples = find_examples()
         
-        if choice == 0:
-            print("👋 Goodbye!")
+        # Build menu options
+        options = []
+        if examples['html']:
+            for ex in examples['html']:
+                options.append(('html', ex))
+        if examples['typescript']:
+            for ex in examples['typescript']:
+                options.append(('typescript', ex))
+        if examples['gradio']:
+            for ex in examples['gradio']:
+                options.append(('gradio', ex))
+        if examples['streamlit']:
+            for ex in examples['streamlit']:
+                options.append(('streamlit', ex))
+        
+        # Check if backend exists
+        backend_exists = (BASE_DIR / 'backend' / 'main.py').exists()
+        
+        if not options and not backend_exists:
+            print("❌ No examples found")
             return
         
-        if backend_idx and choice == backend_idx:
-            launch_backend()
-        elif 1 <= choice <= len(options):
-            typ, name = options[choice - 1]
-            if typ == 'html':
-                launch_html(name)
-            elif typ == 'gradio':
-                launch_gradio(name)
-            elif typ == 'streamlit':
-                launch_streamlit(name)
+        print("\n🚀 Frontend Designs Launcher\n")
+        
+        # Display menu
+        idx = 1
+        for typ, name in options:
+            print(f"  {idx}. [{typ.upper()}] {name}")
+            idx += 1
+        
+        if backend_exists:
+            print(f"  {idx}. [BACKEND] FastAPI Backend")
+            backend_idx = idx
         else:
-            print("❌ Invalid option")
-    except (ValueError, KeyboardInterrupt):
-        print("\n👋 Goodbye!")
+            backend_idx = None
+        
+        print(f"  0. Exit\n")
+        
+        # Get user choice
+        try:
+            choice = int(input("Select an option: "))
+            
+            if choice == 0:
+                print("👋 Goodbye!")
+                return
+            
+            if backend_idx and choice == backend_idx:
+                launch_backend()
+            elif 1 <= choice <= len(options):
+                typ, name = options[choice - 1]
+                if typ == 'html':
+                    launch_html(name)
+                elif typ == 'gradio':
+                    launch_gradio(name)
+                elif typ == 'streamlit':
+                    launch_streamlit(name)
+            else:
+                print("❌ Invalid option")
+        except (ValueError, KeyboardInterrupt):
+            print("\n👋 Goodbye!")
+            return
 
 def main():
     if len(sys.argv) < 2:
