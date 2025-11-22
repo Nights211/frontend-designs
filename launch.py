@@ -192,17 +192,20 @@ def interactive_menu():
         
         # Display menu
         idx = 1
+        max_idx = len(options) + (1 if backend_exists else 0)
+        width = len(str(max_idx))
+        
         for typ, name in options:
-            print(f"  {idx}. [{typ.upper()}] {name}")
+            print(f"  {idx:>{width}}. [{typ.upper()}] {name}")
             idx += 1
         
         if backend_exists:
-            print(f"  {idx}. [BACKEND] FastAPI Backend")
+            print(f"  {idx:>{width}}. [BACKEND] FastAPI Backend")
             backend_idx = idx
         else:
             backend_idx = None
         
-        print(f"  0. Exit\n")
+        print(f"  {0:>{width}}. Exit\n")
         
         # Get user choice
         try:
