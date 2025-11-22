@@ -3,7 +3,7 @@ import os
 import sys
 import webbrowser
 import subprocess
-import time
+import signal
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
@@ -94,9 +94,17 @@ def launch_html(example_name):
     except:
         pass
     
+    process = None
     try:
-        subprocess.run(['python3', '-m', 'http.server', '8000'])
+        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'])
+        process.wait()
     except KeyboardInterrupt:
+        if process:
+            process.terminate()
+            try:
+                process.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                process.kill()
         print("\n\n✅ Server stopped")
 
 def launch_gradio(example_name):
