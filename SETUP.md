@@ -5,6 +5,17 @@
 - Node.js and npm (for TypeScript designs)
 - Python 3.8+ (for Python frontends and backend)
 
+## WSL Users
+
+If using WSL, configure your browser for auto-opening:
+
+```bash
+# Add to ~/.zshrc or ~/.bashrc
+export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+```
+
+Then reload: `source ~/.zshrc`
+
 ## TypeScript Setup
 
 ```bash
