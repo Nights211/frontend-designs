@@ -33,4 +33,25 @@ frontend-designs/
 
 See [SETUP.md](SETUP.md) for installation and setup instructions.
 
+### Launcher Script
+
+Use the launcher script to quickly run examples:
+
+```bash
+# List all examples
+./launch.py list
+
+# Launch HTML example
+./launch.py html landing-page-01
+
+# Launch Gradio app
+./launch.py gradio <example-name>
+
+# Launch Streamlit app
+./launch.py streamlit <example-name>
+
+# Start backend
+./launch.py backend
+```
+
 Each design example is self-contained in its own directory with its own README.
