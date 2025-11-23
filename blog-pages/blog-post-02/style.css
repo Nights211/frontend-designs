@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, serif;
+    line-height: 1.7;
+    color: #2c3e50;
+    background: #f8f9fa;
+}
+
+header {
+    background: #fff;
+    border-bottom: 3px solid #e74c3c;
+    padding: 1.5rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-title {
+    font-size: 2rem;
+    color: #e74c3c;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #34495e;
+    font-family: sans-serif;
+    font-weight: 500;
+}
+
+main.container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+article {
+    background: #fff;
+    padding: 3rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+article h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+article h2 {
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    color: #34495e;
+}
+
+article p {
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+}
+
+article em {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+}
+
+article strong {
+    color: #2c3e50;
+}
+
+aside {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.sidebar-section {
+    background: #fff;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.sidebar-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.sidebar-section ul {
+    list-style: none;
+}
+
+.sidebar-section li {
+    margin-bottom: 0.8rem;
+}
+
+.sidebar-section a {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tags span {
+    background: #ecf0f1;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-family: sans-serif;
+}

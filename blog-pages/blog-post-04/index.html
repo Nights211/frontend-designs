@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Card Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>ModernDev</h1>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Articles</a>
+                <a href="#">Newsletter</a>
+            </nav>
+        </div>
+    </header>
+    <div class="hero">
+        <div class="hero-content">
+            <span class="category">Architecture</span>
+            <h2 id="hero-title">Loading...</h2>
+        </div>
+    </div>
+    <main>
+        <article id="content"></article>
+    </main>
+    <script>
+        fetch('content.md')
+            .then(r => r.text())
+            .then(md => {
+                const html = marked.parse(md);
+                document.getElementById('content').innerHTML = html;
+                const title = document.querySelector('#content h1');
+                if (title) {
+                    document.getElementById('hero-title').textContent = title.textContent;
+                    title.remove();
+                }
+            });
+    </script>
+</body>
+</html>

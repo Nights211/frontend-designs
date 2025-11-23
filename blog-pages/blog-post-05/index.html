@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newspaper Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="masthead">
+            <h1>The Developer Times</h1>
+            <p class="tagline">Engineering insights and best practices</p>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Opinion</a>
+            <a href="#">Technology</a>
+            <a href="#">Culture</a>
+            <a href="#">Subscribe</a>
+        </nav>
+    </header>
+    <main>
+        <article id="content"></article>
+    </main>
+    <footer>
+        <p>© 2025 The Developer Times. All rights reserved.</p>
+    </footer>
+    <script>
+        fetch('content.md')
+            .then(r => r.text())
+            .then(md => {
+                document.getElementById('content').innerHTML = marked.parse(md);
+            });
+    </script>
+</body>
+</html>
