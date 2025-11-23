@@ -11,16 +11,22 @@ BASE_DIR = Path(__file__).parent
 def find_examples():
     """Find all examples in the repo"""
     examples = {
-        'html': [],
+        'landing': [],
+        'blog': [],
         'typescript': [],
         'gradio': [],
         'streamlit': []
     }
     
-    # HTML examples
-    html_dir = BASE_DIR / 'html-css-js'
-    if html_dir.exists():
-        examples['html'] = sorted([d.name for d in html_dir.iterdir() if d.is_dir()])
+    # Landing page examples
+    landing_dir = BASE_DIR / 'landing-pages'
+    if landing_dir.exists():
+        examples['landing'] = sorted([d.name for d in landing_dir.iterdir() if d.is_dir()])
+    
+    # Blog examples
+    blog_dir = BASE_DIR / 'blog-pages'
+    if blog_dir.exists():
+        examples['blog'] = sorted([d.name for d in blog_dir.iterdir() if d.is_dir()])
     
     # TypeScript examples
     ts_dir = BASE_DIR / 'typescript-designs'
@@ -48,9 +54,14 @@ def list_examples():
     
     print("\n📦 Available Examples:\n")
     
-    if examples['html']:
-        print("HTML/CSS/JS:")
-        for ex in examples['html']:
+    if examples['landing']:
+        print("Landing Pages:")
+        for ex in examples['landing']:
+            print(f"  • {ex}")
+    
+    if examples['blog']:
+        print("\nBlog Pages:")
+        for ex in examples['blog']:
             print(f"  • {ex}")
     
     if examples['typescript']:
@@ -69,14 +80,15 @@ def list_examples():
             print(f"  • {ex}")
     
     print("\n💡 Usage:")
-    print("  ./launch.py html <example-name>")
+    print("  ./launch.py landing <example-name>")
+    print("  ./launch.py blog <example-name>")
     print("  ./launch.py gradio <example-name>")
     print("  ./launch.py streamlit <example-name>")
     print("  ./launch.py backend")
 
-def launch_html(example_name):
-    """Launch HTML example"""
-    example_path = BASE_DIR / 'html-css-js' / example_name
+def launch_landing(example_name):
+    """Launch landing page example"""
+    example_path = BASE_DIR / 'landing-pages' / example_name
     
     if not example_path.exists():
         print(f"❌ Example '{example_name}' not found")
@@ -88,7 +100,38 @@ def launch_html(example_name):
     
     os.chdir(example_path)
     
-    # Try to open browser, but don't fail if it doesn't work
+    try:
+        webbrowser.open('http://localhost:8000')
+    except:
+        pass
+    
+    process = None
+    try:
+        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'])
+        process.wait()
+    except KeyboardInterrupt:
+        if process:
+            process.terminate()
+            try:
+                process.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                process.kill()
+        print("\n\n✅ Server stopped")
+
+def launch_blog(example_name):
+    """Launch blog page example"""
+    example_path = BASE_DIR / 'blog-pages' / example_name
+    
+    if not example_path.exists():
+        print(f"❌ Example '{example_name}' not found")
+        return
+    
+    print(f"\n🚀 Launching {example_name}...")
+    print("📡 Server running at http://localhost:8000")
+    print("Press Ctrl+C to stop and return to menu\n")
+    
+    os.chdir(example_path)
+    
     try:
         webbrowser.open('http://localhost:8000')
     except:
@@ -166,21 +209,28 @@ def interactive_menu():
     while True:
         examples = find_examples()
         
-        # Build menu options with numbers extracted from names
-        options = {}  # number -> (type, name)
+        # Build menu options with prefix + number (e.g., l1, b1)
+        options = {}  # prefix+number -> (type, name)
+        prefixes = {
+            'landing': 'l',
+            'blog': 'b',
+            'typescript': 't',
+            'gradio': 'g',
+            'streamlit': 's'
+        }
         
-        for typ in ['html', 'typescript', 'gradio', 'streamlit']:
+        import re
+        for typ in ['landing', 'blog', 'typescript', 'gradio', 'streamlit']:
             for ex in examples[typ]:
                 # Extract number from name (e.g., landing-page-03 -> 3)
-                import re
                 match = re.search(r'-(\d+)$', ex)
                 if match:
-                    num = int(match.group(1))
-                    options[num] = (typ, ex)
+                    num = str(int(match.group(1)))  # Strip leading zeros
+                    key = f"{prefixes[typ]}{num}"
+                    options[key] = (typ, ex)
         
         # Check if backend exists
         backend_exists = (BASE_DIR / 'backend' / 'main.py').exists()
-        backend_num = 99  # Use 99 for backend
         
         if not options and not backend_exists:
             print("❌ No examples found")
@@ -188,37 +238,55 @@ def interactive_menu():
         
         print("\n🚀 Frontend Designs Launcher\n")
         
-        # Display menu sorted by number
-        for num in sorted(options.keys()):
-            typ, name = options[num]
-            print(f"  {num:>2}. [{typ.upper()}] {name}")
+        # Display menu grouped by type
+        section_names = {
+            'landing': 'Landing Pages',
+            'blog': 'Blog Pages',
+            'typescript': 'TypeScript',
+            'gradio': 'Gradio',
+            'streamlit': 'Streamlit'
+        }
+        
+        for typ in ['landing', 'blog', 'typescript', 'gradio', 'streamlit']:
+            if examples[typ]:
+                print(f"{section_names[typ]}:")
+                for ex in examples[typ]:
+                    match = re.search(r'-(\d+)$', ex)
+                    if match:
+                        num = str(int(match.group(1)))  # Strip leading zeros
+                        key = f"{prefixes[typ]}{num}"
+                        print(f"  {key:>3}. {ex}")
+                print()  # Blank line after each section
         
         if backend_exists:
-            print(f"  {backend_num:>2}. [BACKEND] FastAPI Backend")
+            print("Backend:")
+            print(f"   99. FastAPI Backend\n")
         
-        print(f"   0. Exit\n")
+        print("   0. Exit\n")
         
         # Get user choice
         try:
-            choice = int(input("Select an option: "))
+            choice = input("Select an option: ").strip().lower()
             
-            if choice == 0:
+            if choice == '0':
                 print("👋 Goodbye!")
                 return
             
-            if backend_exists and choice == backend_num:
+            if backend_exists and choice == '99':
                 launch_backend()
             elif choice in options:
                 typ, name = options[choice]
-                if typ == 'html':
-                    launch_html(name)
+                if typ == 'landing':
+                    launch_landing(name)
+                elif typ == 'blog':
+                    launch_blog(name)
                 elif typ == 'gradio':
                     launch_gradio(name)
                 elif typ == 'streamlit':
                     launch_streamlit(name)
             else:
                 print("❌ Invalid option")
-        except (ValueError, KeyboardInterrupt):
+        except KeyboardInterrupt:
             print("\n👋 Goodbye!")
             return
 
@@ -231,8 +299,10 @@ def main():
     
     if command == 'list':
         list_examples()
-    elif command == 'html' and len(sys.argv) > 2:
-        launch_html(sys.argv[2])
+    elif command == 'landing' and len(sys.argv) > 2:
+        launch_landing(sys.argv[2])
+    elif command == 'blog' and len(sys.argv) > 2:
+        launch_blog(sys.argv[2])
     elif command == 'gradio' and len(sys.argv) > 2:
         launch_gradio(sys.argv[2])
     elif command == 'streamlit' and len(sys.argv) > 2:

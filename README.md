@@ -21,7 +21,8 @@ This repository contains various frontend designs and UI patterns that can be re
 
 ```
 frontend-designs/
-├── html-css-js/        # Pure HTML/CSS/JS designs
+├── landing-pages/      # Landing page designs
+├── blog-pages/         # Blog post designs
 ├── typescript-designs/ # TypeScript-based UIs
 ├── python-frontends/   # Gradio and Streamlit UIs
 ├── backend/            # Shared FastAPI backend with SQLite
@@ -41,8 +42,11 @@ Use the launcher script to quickly run examples:
 # List all examples
 ./launch.py list
 
-# Launch HTML example
-./launch.py html landing-page-01
+# Launch landing page
+./launch.py landing landing-page-01
+
+# Launch blog page
+./launch.py blog blog-post-01
 
 # Launch Gradio app
 ./launch.py gradio <example-name>
@@ -52,6 +56,17 @@ Use the launcher script to quickly run examples:
 
 # Start backend
 ./launch.py backend
+
+# Interactive menu (just run without arguments)
+./launch.py
 ```
+
+### Hard Refresh
+
+If you make changes to HTML/CSS/JS files and don't see updates in your browser, you may need to hard refresh:
+
+- **Windows/Linux**: `Ctrl + Shift + R` or `Ctrl + F5`
+- **Mac**: `Cmd + Shift + R`
+- **Alternative**: Open DevTools (`F12`) and right-click the refresh button, select "Empty Cache and Hard Reload"
 
 Each design example is self-contained in its own directory with its own README.
