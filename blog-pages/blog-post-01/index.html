@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Post - AI in Production</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <header>
@@ -15,32 +16,17 @@
         </nav>
     </header>
 
-    <article>
-        <h1>Getting Started with AI in Production</h1>
-        <div class="meta">
-            <span class="date">November 23, 2025</span>
-            <span class="author">By Alex Chen</span>
-        </div>
-        
-        <p class="lead">Deploying AI models to production requires careful planning and consideration of various factors.</p>
-        
-        <h2>Key Considerations</h2>
-        <p>When moving from development to production, you need to think about scalability, monitoring, and cost optimization.</p>
-        
-        <h2>Best Practices</h2>
-        <ul>
-            <li>Start with a minimal viable deployment</li>
-            <li>Implement comprehensive logging</li>
-            <li>Set up automated testing</li>
-            <li>Monitor performance metrics</li>
-        </ul>
-        
-        <h2>Conclusion</h2>
-        <p>With the right approach, deploying AI models can be straightforward and reliable.</p>
-    </article>
+    <article id="content"></article>
 
     <footer>
         <p>&copy; 2025 AI Blog</p>
     </footer>
+    <script>
+        fetch('content.md')
+            .then(r => r.text())
+            .then(md => {
+                document.getElementById('content').innerHTML = marked.parse(md);
+            });
+    </script>
 </body>
 </html>

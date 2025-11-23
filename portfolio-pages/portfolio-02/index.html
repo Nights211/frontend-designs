@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Timeline</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <aside>
+        <div id="profile"></div>
+        <nav>
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </aside>
+    <main id="timeline"></main>
+    <script>
+        fetch('projects.md')
+            .then(r => r.text())
+            .then(md => {
+                const lines = md.split('\n');
+                const name = lines[0].replace('# ', '');
+                const title = lines[1].replace('## ', '');
+                const about = lines[3].replace('Building ', '');
+                
+                document.getElementById('profile').innerHTML = `
+                    <h1>${name}</h1>
+                    <p class="title">${title}</p>
+                    <p class="bio">${about}</p>
+                `;
+                
+                const projects = md.split('---').slice(1);
+                const timelineHtml = projects.map(p => {
+                    const html = marked.parse(p.trim());
+                    return `<div class="timeline-item">${html}</div>`;
+                }).join('');
+                
+                document.getElementById('timeline').innerHTML = timelineHtml;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Grid Layout</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <div id="header-content"></div>
+        <nav>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <main id="projects"></main>
+    <footer id="contact">
+        <a href="mailto:sarah@example.com">Email</a>
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+    </footer>
+    <script>
+        fetch('projects.md')
+            .then(r => r.text())
+            .then(md => {
+                const lines = md.split('\n');
+                const name = lines[0].replace('# ', '');
+                const title = lines[1].replace('## ', '');
+                const about = lines[3].replace('About me: ', '');
+                
+                document.getElementById('header-content').innerHTML = `
+                    <h1>${name}</h1>
+                    <p class="subtitle">${title}</p>
+                    <p class="about">${about}</p>
+                `;
+                
+                const projects = md.split('---').slice(1);
+                const projectsHtml = projects.map(p => {
+                    const html = marked.parse(p.trim());
+                    return `<div class="project-card">${html}</div>`;
+                }).join('');
+                
+                document.getElementById('projects').innerHTML = projectsHtml;
+            });
+    </script>
+</body>
+</html>

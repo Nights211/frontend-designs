@@ -13,6 +13,7 @@ def find_examples():
     examples = {
         'landing': [],
         'blog': [],
+        'portfolio': [],
         'typescript': [],
         'gradio': [],
         'streamlit': []
@@ -27,6 +28,11 @@ def find_examples():
     blog_dir = BASE_DIR / 'blog-pages'
     if blog_dir.exists():
         examples['blog'] = sorted([d.name for d in blog_dir.iterdir() if d.is_dir()])
+    
+    # Portfolio examples
+    portfolio_dir = BASE_DIR / 'portfolio-pages'
+    if portfolio_dir.exists():
+        examples['portfolio'] = sorted([d.name for d in portfolio_dir.iterdir() if d.is_dir()])
     
     # TypeScript examples
     ts_dir = BASE_DIR / 'typescript-designs'
@@ -64,6 +70,11 @@ def list_examples():
         for ex in examples['blog']:
             print(f"  • {ex}")
     
+    if examples['portfolio']:
+        print("\nPortfolio Pages:")
+        for ex in examples['portfolio']:
+            print(f"  • {ex}")
+    
     if examples['typescript']:
         print("\nTypeScript:")
         for ex in examples['typescript']:
@@ -82,6 +93,7 @@ def list_examples():
     print("\n💡 Usage:")
     print("  ./launch.py landing <example-name>")
     print("  ./launch.py blog <example-name>")
+    print("  ./launch.py portfolio <example-name>")
     print("  ./launch.py gradio <example-name>")
     print("  ./launch.py streamlit <example-name>")
     print("  ./launch.py backend")
@@ -121,6 +133,34 @@ def launch_landing(example_name):
 def launch_blog(example_name):
     """Launch blog page example"""
     example_path = BASE_DIR / 'blog-pages' / example_name
+    
+    if not example_path.exists():
+        print(f"❌ Example '{example_name}' not found")
+        return
+    
+    print(f"\n🚀 Launching {example_name}...")
+    print("📡 Server running at http://localhost:8000")
+    print("Press Ctrl+C to stop and return to menu\n")
+    
+    os.chdir(example_path)
+    
+    try:
+        webbrowser.open('http://localhost:8000')
+    except:
+        pass
+    
+    process = None
+    try:
+        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'])
+        process.wait()
+    except KeyboardInterrupt:
+        if process:
+            process.terminate()
+        print("\n\n✅ Server stopped")
+
+def launch_portfolio(example_name):
+    """Launch portfolio page example"""
+    example_path = BASE_DIR / 'portfolio-pages' / example_name
     
     if not example_path.exists():
         print(f"❌ Example '{example_name}' not found")
@@ -214,13 +254,14 @@ def interactive_menu():
         prefixes = {
             'landing': 'l',
             'blog': 'b',
+            'portfolio': 'p',
             'typescript': 't',
             'gradio': 'g',
             'streamlit': 's'
         }
         
         import re
-        for typ in ['landing', 'blog', 'typescript', 'gradio', 'streamlit']:
+        for typ in ['landing', 'blog', 'portfolio', 'typescript', 'gradio', 'streamlit']:
             for ex in examples[typ]:
                 # Extract number from name (e.g., landing-page-03 -> 3)
                 match = re.search(r'-(\d+)$', ex)
@@ -242,12 +283,13 @@ def interactive_menu():
         section_names = {
             'landing': 'Landing Pages',
             'blog': 'Blog Pages',
+            'portfolio': 'Portfolio Pages',
             'typescript': 'TypeScript',
             'gradio': 'Gradio',
             'streamlit': 'Streamlit'
         }
         
-        for typ in ['landing', 'blog', 'typescript', 'gradio', 'streamlit']:
+        for typ in ['landing', 'blog', 'portfolio', 'typescript', 'gradio', 'streamlit']:
             if examples[typ]:
                 print(f"{section_names[typ]}:")
                 for ex in examples[typ]:
@@ -280,6 +322,8 @@ def interactive_menu():
                     launch_landing(name)
                 elif typ == 'blog':
                     launch_blog(name)
+                elif typ == 'portfolio':
+                    launch_portfolio(name)
                 elif typ == 'gradio':
                     launch_gradio(name)
                 elif typ == 'streamlit':
@@ -303,6 +347,8 @@ def main():
         launch_landing(sys.argv[2])
     elif command == 'blog' and len(sys.argv) > 2:
         launch_blog(sys.argv[2])
+    elif command == 'portfolio' and len(sys.argv) > 2:
+        launch_portfolio(sys.argv[2])
     elif command == 'gradio' and len(sys.argv) > 2:
         launch_gradio(sys.argv[2])
     elif command == 'streamlit' and len(sys.argv) > 2:

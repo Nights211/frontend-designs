@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Minimal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header id="hero"></header>
+    <main id="projects"></main>
+    <footer>
+        <p>Get in touch: <a href="mailto:alex@example.com">alex@example.com</a></p>
+    </footer>
+    <script>
+        fetch('projects.md')
+            .then(r => r.text())
+            .then(md => {
+                const lines = md.split('\n');
+                const name = lines[0].replace('# ', '');
+                const title = lines[1].replace('## ', '');
+                const tagline = lines[3];
+                
+                document.getElementById('hero').innerHTML = `
+                    <h1>${name}</h1>
+                    <p class="title">${title}</p>
+                    <p class="tagline">${tagline}</p>
+                `;
+                
+                const projects = md.split('---').slice(1);
+                const projectsHtml = projects.map((p, i) => {
+                    const html = marked.parse(p.trim());
+                    return `<div class="project" style="animation-delay: ${i * 0.1}s">${html}</div>`;
+                }).join('');
+                
+                document.getElementById('projects').innerHTML = projectsHtml;
+            });
+    </script>
+</body>
+</html>
