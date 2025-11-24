@@ -42,6 +42,10 @@ nav ul {
     gap: 2rem;
 }
 
+nav li {
+    position: relative;
+}
+
 nav a {
     color: white;
     text-decoration: none;
@@ -49,6 +53,37 @@ nav a {
 
 nav a:hover {
     color: #60a5fa;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    min-width: 200px;
+    border-radius: 8px;
+    padding-top: 0.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background: rgba(96, 165, 250, 0.2);
+    color: #60a5fa;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 .hero {
@@ -137,6 +172,9 @@ nav a:hover {
     transition: all 0.3s ease;
     background: rgba(30, 41, 59, 0.8);
     backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
 }
 
 .fade-in {
@@ -184,4 +222,73 @@ footer {
     text-align: center;
     padding: 2rem;
     margin-top: 4rem;
+}
+
+.feature-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    color: #f1f5f9;
+}
+
+.feature-detail .feature-icon {
+    font-size: 5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.feature-detail h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #60a5fa;
+}
+
+.feature-detail .subtitle {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    margin-bottom: 3rem;
+}
+
+.feature-detail .content {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.feature-detail h2 {
+    color: #60a5fa;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.feature-detail h2:first-child {
+    margin-top: 0;
+}
+
+.feature-detail p {
+    color: #cbd5e1;
+    line-height: 1.8;
+}
+
+.feature-detail ul {
+    color: #cbd5e1;
+    margin-left: 2rem;
+    line-height: 1.8;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: #93c5fd;
+    transform: translateX(-5px);
 }
