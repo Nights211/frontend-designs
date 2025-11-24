@@ -14,7 +14,7 @@
         </div>
         <div class="header-actions">
             <span>👤 Account</span>
-            <span>🛒 Cart (3)</span>
+            <span>🛒 Cart (0)</span>
         </div>
     </header>
 
@@ -38,87 +38,45 @@
             </div>
         </aside>
 
-        <main>
-            <div class="product-row">
-                <div class="product-image">📱</div>
-                <div class="product-info">
-                    <h2>iPhone 15 Pro Max</h2>
-                    <p class="category">Smartphones</p>
-                    <p class="description">6.7" Super Retina XDR display, A17 Pro chip, 256GB storage, Titanium design with advanced camera system</p>
-                    <div class="specs">
-                        <span>✓ 5G</span>
-                        <span>✓ 48MP Camera</span>
-                        <span>✓ Face ID</span>
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <div class="price">$1,199</div>
-                    <div class="rating">⭐⭐⭐⭐⭐ (4.8)</div>
-                    <button class="add-cart">Add to Cart</button>
-                    <button class="view-details">View Details</button>
-                </div>
-            </div>
-
-            <div class="product-row">
-                <div class="product-image">💻</div>
-                <div class="product-info">
-                    <h2>MacBook Pro 16"</h2>
-                    <p class="category">Laptops</p>
-                    <p class="description">M3 Max chip, 36GB unified memory, 1TB SSD, Liquid Retina XDR display, up to 22 hours battery life</p>
-                    <div class="specs">
-                        <span>✓ M3 Max</span>
-                        <span>✓ 36GB RAM</span>
-                        <span>✓ 1TB SSD</span>
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <div class="price">$3,499</div>
-                    <div class="rating">⭐⭐⭐⭐⭐ (4.9)</div>
-                    <button class="add-cart">Add to Cart</button>
-                    <button class="view-details">View Details</button>
-                </div>
-            </div>
-
-            <div class="product-row">
-                <div class="product-image">🎧</div>
-                <div class="product-info">
-                    <h2>Sony WH-1000XM5</h2>
-                    <p class="category">Audio</p>
-                    <p class="description">Industry-leading noise cancellation, 30-hour battery, premium sound quality with LDAC support</p>
-                    <div class="specs">
-                        <span>✓ ANC</span>
-                        <span>✓ 30hr Battery</span>
-                        <span>✓ LDAC</span>
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <div class="price">$399</div>
-                    <div class="rating">⭐⭐⭐⭐⭐ (4.7)</div>
-                    <button class="add-cart">Add to Cart</button>
-                    <button class="view-details">View Details</button>
-                </div>
-            </div>
-
-            <div class="product-row">
-                <div class="product-image">⌚</div>
-                <div class="product-info">
-                    <h2>Apple Watch Ultra 2</h2>
-                    <p class="category">Wearables</p>
-                    <p class="description">49mm titanium case, precision dual-frequency GPS, up to 36 hours battery, water resistant to 100m</p>
-                    <div class="specs">
-                        <span>✓ GPS</span>
-                        <span>✓ 36hr Battery</span>
-                        <span>✓ 100m Water</span>
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <div class="price">$799</div>
-                    <div class="rating">⭐⭐⭐⭐⭐ (4.8)</div>
-                    <button class="add-cart">Add to Cart</button>
-                    <button class="view-details">View Details</button>
-                </div>
-            </div>
-        </main>
+        <main id="products-container"></main>
     </div>
+    <script>
+        const API_URL = 'http://localhost:8001/api';
+        
+        fetch(`${API_URL}/products`)
+            .then(r => r.json())
+            .then(products => {
+                const container = document.getElementById('products-container');
+                products.forEach(product => {
+                    const row = document.createElement('div');
+                    row.className = 'product-row';
+                    const stockStatus = product.stock > 50 ? 'In Stock' : product.stock > 0 ? `Only ${product.stock} left` : 'Out of Stock';
+                    const stockClass = product.stock > 50 ? 'high' : product.stock > 0 ? 'low' : 'out';
+                    row.innerHTML = `
+                        <div class="product-image">${product.image}</div>
+                        <div class="product-info">
+                            <h2>${product.name}</h2>
+                            <p class="category">${product.category}</p>
+                            <p class="description">${product.description}</p>
+                            <div class="specs">
+                                <span class="stock-badge ${stockClass}">📦 ${stockStatus}</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <div class="price">$${product.price.toFixed(2)}</div>
+                            <button class="add-cart" ${product.stock === 0 ? 'disabled' : ''}>
+                                ${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                            </button>
+                            <button class="view-details">View Details</button>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            })
+            .catch(err => {
+                document.getElementById('products-container').innerHTML = 
+                    '<p style="color: #e74c3c; padding: 2rem;">⚠️ Backend not running. Start it with: ./launch.py backend</p>';
+            });
+    </script>
 </body>
 </html>

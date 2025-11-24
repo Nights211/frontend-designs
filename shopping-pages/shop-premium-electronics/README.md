@@ -1,6 +1,6 @@
-# Shopping Website - Example 02
+# Premium Electronics Shop
 
-A dark-themed e-commerce design with sidebar navigation and detailed product rows.
+A dark-themed e-commerce design with sidebar navigation and detailed product rows. Products are loaded from the backend API.
 
 ## Features
 
@@ -8,11 +8,12 @@ A dark-themed e-commerce design with sidebar navigation and detailed product row
 - Left sidebar with category navigation
 - Price range filters
 - Row-based product layout with full details
-- Product specifications and ratings
+- Dynamic data from backend database
 - Search bar in header
 
 ## Launch
 
-```bash
-./launch.py shopping shopping-02
-```
+1. Start the backend: `./launch.py backend`
+2. Launch this page: `./launch.py shopping shop-premium-electronics`
+3. Open http://localhost:8002 in your browser
+

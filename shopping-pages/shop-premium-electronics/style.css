@@ -164,6 +164,25 @@ main {
     color: #00d4ff;
 }
 
+.stock-badge {
+    font-weight: 500;
+}
+
+.stock-badge.high {
+    background: #1a4d2e;
+    color: #4ade80;
+}
+
+.stock-badge.low {
+    background: #4d3a1a;
+    color: #fbbf24;
+}
+
+.stock-badge.out {
+    background: #4d1a1a;
+    color: #ef4444;
+}
+
 .product-actions {
     display: flex;
     flex-direction: column;
@@ -201,6 +220,16 @@ main {
 
 .add-cart:hover {
     background: #00b8e6;
+}
+
+.add-cart:disabled {
+    background: #2a2a2a;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.add-cart:disabled:hover {
+    background: #2a2a2a;
 }
 
 .view-details {
