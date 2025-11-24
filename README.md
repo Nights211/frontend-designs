@@ -4,14 +4,12 @@ A reference library of frontend UI designs and examples for AI projects.
 
 ## Purpose
 
-This repository contains various frontend designs and UI patterns that can be referenced when building AI-related projects. It includes examples across multiple technologies and frameworks.
+This repository contains various frontend designs and UI patterns that can be referenced when building AI-related projects. All examples use HTML/CSS/JavaScript.
 
 ## Tech Stack
 
 **Frontends:**
 - HTML/CSS/JavaScript
-- TypeScript (React, Vue, etc.)
-- Python (Gradio, Streamlit)
 
 **Backend:**
 - FastAPI (Python)
@@ -23,8 +21,8 @@ This repository contains various frontend designs and UI patterns that can be re
 frontend-designs/
 ├── landing-pages/      # Landing page designs
 ├── blog-pages/         # Blog post designs
-├── typescript-designs/ # TypeScript-based UIs
-├── python-frontends/   # Gradio and Streamlit UIs
+├── portfolio-pages/    # Portfolio page designs
+├── shopping-pages/     # E-commerce page designs
 ├── backend/            # Shared FastAPI backend with SQLite
 ├── SETUP.md            # Setup instructions
 └── README.md           # This file
@@ -43,16 +41,16 @@ Use the launcher script to quickly run examples:
 ./launch.py list
 
 # Launch landing page
-./launch.py landing landing-page-01
+./launch.py landing <example-name>
 
 # Launch blog page
-./launch.py blog blog-post-01
+./launch.py blog <example-name>
 
-# Launch Gradio app
-./launch.py gradio <example-name>
+# Launch portfolio page
+./launch.py portfolio <example-name>
 
-# Launch Streamlit app
-./launch.py streamlit <example-name>
+# Launch shopping page
+./launch.py shopping <example-name>
 
 # Start backend
 ./launch.py backend
