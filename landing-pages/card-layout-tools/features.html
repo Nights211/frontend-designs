@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - AI Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="floating-shapes">
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+    </div>
+
+    <header>
+        <div class="logo">AI Studio</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="features.html">Features</a>
+            <a href="about.html">About</a>
+        </nav>
+        <button class="login" id="login-btn">Sign In</button>
+    </header>
+
+    <div class="page-content">
+        <h1>Powerful Features</h1>
+        <p class="subtitle">Everything you need to build intelligent applications</p>
+
+        <div class="features-grid">
+            <div class="feature-card parallax-item" data-speed="0.5">
+                <div class="feature-icon-large">🚀</div>
+                <h3>Lightning Fast</h3>
+                <p>Process requests in milliseconds with our optimized infrastructure and edge computing network.</p>
+            </div>
+
+            <div class="feature-card parallax-item" data-speed="0.7">
+                <div class="feature-icon-large">🔒</div>
+                <h3>Enterprise Security</h3>
+                <p>Bank-level encryption, SOC 2 compliance, and data privacy controls to keep your information safe.</p>
+            </div>
+
+            <div class="feature-card parallax-item" data-speed="0.6">
+                <div class="feature-icon-large">📊</div>
+                <h3>Real-time Analytics</h3>
+                <p>Monitor usage, track performance, and gain insights with comprehensive analytics dashboards.</p>
+            </div>
+
+            <div class="feature-card parallax-item" data-speed="0.8">
+                <div class="feature-icon-large">🔧</div>
+                <h3>Easy Integration</h3>
+                <p>RESTful APIs, SDKs for popular languages, and extensive documentation to get started quickly.</p>
+            </div>
+
+            <div class="feature-card parallax-item" data-speed="0.5">
+                <div class="feature-icon-large">🌍</div>
+                <h3>Global Scale</h3>
+                <p>Deploy across multiple regions with automatic failover and load balancing for maximum uptime.</p>
+            </div>
+
+            <div class="feature-card parallax-item" data-speed="0.7">
+                <div class="feature-icon-large">🎯</div>
+                <h3>Custom Models</h3>
+                <p>Fine-tune models on your data or bring your own models for specialized use cases.</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AI Studio</h3>
+                <p>Empowering innovation with AI</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <a href="features.html">Features</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="#">Documentation</a>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a href="about.html">About</a>
+                <a href="#">Blog</a>
+                <a href="#">Careers</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <a href="#">Twitter</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AI Studio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>Welcome Back</h2>
+            <p>Sign in to your account</p>
+            <form class="signup-form">
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const parallaxItems = document.querySelectorAll('.parallax-item');
+        
+        window.addEventListener('scroll', () => {
+            parallaxItems.forEach(item => {
+                const speed = item.dataset.speed;
+                const rect = item.getBoundingClientRect();
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * speed * 0.1;
+                
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    item.style.transform = `translateY(${rate}px)`;
+                }
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card').forEach(el => observer.observe(el));
+
+        document.getElementById('login-btn').addEventListener('click', () => {
+            document.getElementById('login-modal').classList.add('active');
+        });
+
+        document.querySelectorAll('.modal-close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.modal').classList.remove('active');
+            });
+        });
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        document.querySelectorAll('.signup-form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('This is a demo template. Form submission is not implemented.');
+            });
+        });
+    </script>
+</body>
+</html>
