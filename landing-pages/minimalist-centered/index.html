@@ -7,14 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav class="nav">
+        <a href="#hero" class="nav-logo">MINIMAL</a>
+        <div class="nav-links">
+            <a href="#platform">Platform</a>
+            <a href="#features">Features</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
     <div class="progress-line"></div>
 
-    <section class="section hero-section">
+    <section id="hero" class="section hero-section">
         <div class="hero-content">
             <div class="hero-tag">AI Platform</div>
             <h1>Simple.<br>Powerful.<br>Effective.</h1>
             <p>We believe in doing more with less. Our platform strips away complexity to reveal pure functionality.</p>
-            <button class="cta-btn">Start Now →</button>
+            <a href="#contact" class="cta-btn">Start Now →</a>
         </div>
         <div class="vertical-text">MINIMAL</div>
         <div class="scroll-indicator">
@@ -23,58 +32,58 @@
         </div>
     </section>
 
-    <section class="section number-section">
+    <section id="platform" class="section number-section">
         <div class="big-number">01</div>
         <div class="number-content">
             <h2>One Platform</h2>
             <p>Everything you need in a single, unified interface. No bloat. No confusion. Just results.</p>
             <div class="stats-inline">
-                <div class="stat-item">
+                <a href="#" class="stat-item" data-info="Active users worldwide">
                     <span class="stat-value">10K+</span>
                     <span class="stat-label">Users</span>
-                </div>
-                <div class="stat-item">
+                </a>
+                <a href="#" class="stat-item" data-info="System reliability">
                     <span class="stat-value">99.9%</span>
                     <span class="stat-label">Uptime</span>
-                </div>
-                <div class="stat-item">
+                </a>
+                <a href="#" class="stat-item" data-info="Always available">
                     <span class="stat-value">24/7</span>
                     <span class="stat-label">Support</span>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <section class="section features-section">
+    <section id="features" class="section features-section">
         <div class="features-list">
-            <div class="feature-item">
+            <a href="#" class="feature-item">
                 <div class="feature-number">01</div>
                 <div class="feature-content">
                     <h3>Lightning Fast</h3>
                     <p>Sub-second response times. Optimized for speed at every level.</p>
                 </div>
-            </div>
-            <div class="feature-item">
+            </a>
+            <a href="#" class="feature-item">
                 <div class="feature-number">02</div>
                 <div class="feature-content">
                     <h3>Secure by Design</h3>
                     <p>Enterprise-grade security. Your data is encrypted and protected.</p>
                 </div>
-            </div>
-            <div class="feature-item">
+            </a>
+            <a href="#" class="feature-item">
                 <div class="feature-number">03</div>
                 <div class="feature-content">
                     <h3>Scales Effortlessly</h3>
                     <p>From startup to enterprise. Grows with your needs seamlessly.</p>
                 </div>
-            </div>
-            <div class="feature-item">
+            </a>
+            <a href="#" class="feature-item">
                 <div class="feature-number">04</div>
                 <div class="feature-content">
                     <h3>Simple Integration</h3>
                     <p>Clean APIs. Clear documentation. Start building in minutes.</p>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -91,7 +100,7 @@
         </div>
     </section>
 
-    <section class="section contact-section">
+    <section id="contact" class="section contact-section">
         <div class="contact-wrapper">
             <h2>Let's work together</h2>
             <form class="contact-form">
@@ -99,14 +108,22 @@
                 <button type="submit">→</button>
             </form>
             <div class="contact-info">
-                <a href="#">Documentation</a>
+                <a href="#docs">Documentation</a>
                 <span>·</span>
-                <a href="#">Support</a>
+                <a href="#support">Support</a>
                 <span>·</span>
-                <a href="#">Twitter</a>
+                <a href="#twitter">Twitter</a>
             </div>
         </div>
     </section>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close">×</button>
+            <h3 id="modal-title">Feature Details</h3>
+            <p id="modal-text">This is a placeholder modal for feature details.</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

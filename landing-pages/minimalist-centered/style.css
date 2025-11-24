@@ -20,6 +20,74 @@ body {
     scroll-behavior: smooth;
 }
 
+/* Navigation */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 10%;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.nav.scrolled {
+    border-bottom-color: var(--light-gray);
+}
+
+.nav-logo {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-logo:hover {
+    color: var(--accent);
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+}
+
+.nav-links a {
+    font-size: 0.875rem;
+    color: var(--gray);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--text);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
 .section {
     min-height: 80vh;
     display: flex;
@@ -128,6 +196,7 @@ h1 {
 }
 
 .cta-btn {
+    display: inline-block;
     background: var(--text);
     color: var(--bg);
     border: none;
@@ -137,6 +206,7 @@ h1 {
     cursor: pointer;
     transition: all 0.3s;
     letter-spacing: 0.05em;
+    text-decoration: none;
 }
 
 .cta-btn:hover {
@@ -191,6 +261,30 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stat-item::after {
+    content: attr(data-info);
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    font-size: 0.75rem;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.stat-item:hover::after {
+    opacity: 1;
 }
 
 .stat-value {
@@ -224,10 +318,21 @@ h1 {
     align-items: flex-start;
     padding-bottom: 3rem;
     border-bottom: 1px solid var(--light-gray);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s;
 }
 
 .feature-item:last-child {
     border-bottom: none;
+}
+
+.feature-item:hover {
+    padding-left: 2rem;
+}
+
+.feature-item:hover .feature-number {
+    color: var(--accent);
 }
 
 .feature-number {
@@ -375,6 +480,72 @@ blockquote {
     color: var(--gray);
 }
 
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg);
+    padding: 4rem;
+    max-width: 600px;
+    position: relative;
+    animation: modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--gray);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: var(--accent);
+}
+
+.modal-content h3 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+
+.modal-content p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--gray);
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .vertical-text {
@@ -418,6 +589,14 @@ blockquote {
 @media (max-width: 768px) {
     .section {
         padding: 60px 5%;
+    }
+    
+    .nav {
+        padding: 1.5rem 5%;
+    }
+    
+    .nav-links {
+        gap: 1.5rem;
     }
     
     .vertical-text {
