@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API-Powered Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>TechBlog</h1>
+        <p>Powered by API</p>
+    </header>
+    <main id="posts"></main>
+    <script>
+        const API_URL = 'http://localhost:8000/api';
+        
+        fetch(`${API_URL}/posts`)
+            .then(r => r.json())
+            .then(posts => {
+                const container = document.getElementById('posts');
+                posts.forEach(post => {
+                    const article = document.createElement('article');
+                    article.innerHTML = `
+                        <div class="meta">
+                            <span class="category">${post.category}</span>
+                            <span class="date">${post.date}</span>
+                        </div>
+                        <h2>${post.image} ${post.title}</h2>
+                        <p class="excerpt">${post.excerpt}</p>
+                        <div class="author">By ${post.author}</div>
+                    `;
+                    container.appendChild(article);
+                });
+            })
+            .catch(err => {
+                document.getElementById('posts').innerHTML = 
+                    '<p class="error">⚠️ Backend not running. Start it with: ./launch.py backend</p>';
+            });
+    </script>
+</body>
+</html>

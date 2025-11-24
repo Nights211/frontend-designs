@@ -199,10 +199,10 @@ def launch_shopping(example_name):
 def launch_backend():
     """Launch FastAPI backend"""
     backend_path = BASE_DIR / 'backend'
-    main_file = backend_path / 'main.py'
+    app_file = backend_path / 'app.py'
     
-    if not main_file.exists():
-        print("❌ Backend not set up yet (backend/main.py not found)")
+    if not app_file.exists():
+        print("❌ Backend not set up yet (backend/app.py not found)")
         return
     
     print("\n🚀 Launching FastAPI backend...")
@@ -212,7 +212,7 @@ def launch_backend():
     
     os.chdir(backend_path)
     try:
-        subprocess.run(['uvicorn', 'main:app', '--reload'])
+        subprocess.run(['uvicorn', 'app:app', '--reload'])
     except KeyboardInterrupt:
         print("\n\n✅ Backend stopped")
 
@@ -226,7 +226,7 @@ def interactive_menu():
         counter = 1
         
         # Check if backend exists
-        backend_exists = (BASE_DIR / 'backend' / 'main.py').exists()
+        backend_exists = (BASE_DIR / 'backend' / 'app.py').exists()
         
         if not any(examples.values()) and not backend_exists:
             print("❌ No examples found")

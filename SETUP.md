@@ -55,9 +55,22 @@ streamlit run app.py
 ```
 
 ### Backend
+
+1. Initialize the database:
 ```bash
 cd backend
-uvicorn main:app --reload
+python3 init_db.py
+```
+
+2. Start the backend:
+```bash
+uvicorn app:app --reload
+```
+
+Or use the launcher:
+```bash
+./launch.py backend
 ```
 
 The backend will be available at `http://localhost:8000`
+API docs at `http://localhost:8000/docs`

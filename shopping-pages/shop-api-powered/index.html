@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - API Powered</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">TechStore</div>
+            <div class="cart">🛒 Cart (0)</div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Shop Tech Products</h1>
+            <p>All products loaded from API</p>
+        </section>
+        <section id="products" class="products"></section>
+    </main>
+    <script>
+        const API_URL = 'http://localhost:8000/api';
+        
+        fetch(`${API_URL}/products`)
+            .then(r => r.json())
+            .then(products => {
+                const container = document.getElementById('products');
+                products.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-image">${product.image}</div>
+                        <div class="category">${product.category}</div>
+                        <h3>${product.name}</h3>
+                        <p class="description">${product.description}</p>
+                        <div class="footer">
+                            <span class="price">$${product.price}</span>
+                            <span class="stock">${product.stock} in stock</span>
+                        </div>
+                        <button>Add to Cart</button>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(err => {
+                document.getElementById('products').innerHTML = 
+                    '<p class="error">⚠️ Backend not running. Start it with: ./launch.py backend</p>';
+            });
+    </script>
+</body>
+</html>
