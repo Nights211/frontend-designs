@@ -3,26 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Width Hero</title>
+    <title>Neural - AI Platform</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
+    <div class="mesh-bg"></div>
+    <div class="scroll-progress"></div>
+    
+    <nav id="nav">
         <div class="logo">Neural</div>
-        <ul>
-            <li><a href="#product">Product</a></li>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#demo">Demo</a></li>
             <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#docs">Docs</a></li>
+            <li><a href="#faq">FAQ</a></li>
         </ul>
+        <button class="nav-cta">Start Free</button>
+        <button class="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
 
     <section class="hero">
         <div class="hero-content">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>All systems operational</span>
+            </div>
             <span class="tag">New: GPT-4 Integration</span>
-            <h1>Build the Future<br>with AI</h1>
+            <h1 class="gradient-text">Build the Future<br>with AI</h1>
             <p>Deploy production-ready AI models in minutes. No PhD required.</p>
-            <form class="email-form">
-                <input type="email" placeholder="Enter your email">
+            <form class="email-form" id="hero-form">
+                <input type="email" placeholder="Enter your email" required>
                 <button type="submit">Get Early Access</button>
             </form>
             <span class="note">Free for 14 days. No credit card required.</span>
@@ -31,17 +45,312 @@
 
     <section class="stats">
         <div class="stat">
-            <h2>10M+</h2>
+            <h2 data-target="10000000">0</h2>
             <p>API Calls</p>
         </div>
         <div class="stat">
-            <h2>50K+</h2>
+            <h2 data-target="50000">0</h2>
             <p>Developers</p>
         </div>
         <div class="stat">
-            <h2>99.9%</h2>
+            <h2 data-target="99.9">0</h2>
             <p>Uptime</p>
         </div>
     </section>
+
+    <section id="features" class="features">
+        <h2>Powerful Features</h2>
+        <div class="tabs">
+            <button class="tab active" data-tab="api">API First</button>
+            <button class="tab" data-tab="scale">Auto Scale</button>
+            <button class="tab" data-tab="secure">Secure</button>
+        </div>
+        <div class="tab-content">
+            <div class="tab-panel active" data-panel="api">
+                <div class="feature-grid">
+                    <div class="feature-card glass">
+                        <div class="icon">⚡</div>
+                        <h3>Lightning Fast</h3>
+                        <p>Sub-100ms response times with global edge network</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="icon">🔌</div>
+                        <h3>Simple Integration</h3>
+                        <p>RESTful API with SDKs for all major languages</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="icon">📊</div>
+                        <h3>Real-time Analytics</h3>
+                        <p>Monitor usage and performance in real-time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-panel" data-panel="scale">
+                <div class="feature-grid">
+                    <div class="feature-card glass">
+                        <div class="icon">📈</div>
+                        <h3>Auto Scaling</h3>
+                        <p>Handles traffic spikes automatically</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="icon">🌍</div>
+                        <h3>Global CDN</h3>
+                        <p>Deployed across 50+ regions worldwide</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="icon">💪</div>
+                        <h3>99.99% SLA</h3>
+                        <p>Enterprise-grade reliability guaranteed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-panel" data-panel="secure">
+                <div class="feature-grid">
+                    <div class="feature-card glass">
+                        <div class="icon">🔒</div>
+                        <h3>End-to-End Encryption</h3>
+                        <p>Your data is encrypted at rest and in transit</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="icon">🛡️</div>
+                        <h3>SOC 2 Compliant</h3>
+                        <p>Meets industry security standards</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="icon">👁️</div>
+                        <h3>Audit Logs</h3>
+                        <p>Complete visibility into all API calls</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo">
+        <h2>See It In Action</h2>
+        <div class="demo-container glass">
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" data-copy="demo-code">Copy</button>
+                </div>
+                <pre id="demo-code"><code>import neural
+
+client = neural.Client(api_key="your_key")
+
+response = client.generate(
+    prompt="Explain quantum computing",
+    model="gpt-4",
+    max_tokens=100
+)
+
+print(response.text)</code></pre>
+            </div>
+            <div class="demo-output">
+                <div class="output-header">Output</div>
+                <div class="output-content">
+                    <div class="typing-text"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <h2>Product Roadmap</h2>
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-dot completed"></div>
+                <div class="timeline-content glass">
+                    <span class="timeline-date">Q1 2025</span>
+                    <h3>GPT-4 Integration</h3>
+                    <p>Latest models with improved accuracy</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot completed"></div>
+                <div class="timeline-content glass">
+                    <span class="timeline-date">Q2 2025</span>
+                    <h3>Image Generation</h3>
+                    <p>DALL-E 3 and Stable Diffusion support</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot active"></div>
+                <div class="timeline-content glass">
+                    <span class="timeline-date">Q3 2025</span>
+                    <h3>Voice AI</h3>
+                    <p>Text-to-speech and speech recognition</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass">
+                    <span class="timeline-date">Q4 2025</span>
+                    <h3>Custom Models</h3>
+                    <p>Fine-tune models on your data</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <h2>Loved by Developers</h2>
+        <div class="carousel">
+            <button class="carousel-btn prev" aria-label="Previous">&lt;</button>
+            <div class="carousel-track">
+                <div class="testimonial glass">
+                    <p>"Neural's API is incredibly fast and reliable. We've processed over 1M requests without a single issue."</p>
+                    <div class="author">
+                        <strong>Sarah Chen</strong>
+                        <span>CTO, TechCorp</span>
+                    </div>
+                </div>
+                <div class="testimonial glass">
+                    <p>"The best AI platform I've used. Setup took 5 minutes and the documentation is excellent."</p>
+                    <div class="author">
+                        <strong>Marcus Rodriguez</strong>
+                        <span>Lead Developer, StartupXYZ</span>
+                    </div>
+                </div>
+                <div class="testimonial glass">
+                    <p>"Game changer for our product. The auto-scaling saved us during a traffic spike."</p>
+                    <div class="author">
+                        <strong>Emily Watson</strong>
+                        <span>Founder, AI Solutions</span>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next" aria-label="Next">&gt;</button>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <h2>Simple, Transparent Pricing</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card glass">
+                <h3>Starter</h3>
+                <div class="price">$0<span>/month</span></div>
+                <ul>
+                    <li>✓ 10K API calls/month</li>
+                    <li>✓ Community support</li>
+                    <li>✓ Basic analytics</li>
+                    <li>✗ Custom models</li>
+                </ul>
+                <button class="pricing-btn">Start Free</button>
+            </div>
+            <div class="pricing-card glass featured">
+                <span class="popular-badge">Popular</span>
+                <h3>Pro</h3>
+                <div class="price">$49<span>/month</span></div>
+                <ul>
+                    <li>✓ 1M API calls/month</li>
+                    <li>✓ Priority support</li>
+                    <li>✓ Advanced analytics</li>
+                    <li>✓ Custom models</li>
+                </ul>
+                <button class="pricing-btn primary">Get Started</button>
+            </div>
+            <div class="pricing-card glass">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <ul>
+                    <li>✓ Unlimited API calls</li>
+                    <li>✓ Dedicated support</li>
+                    <li>✓ Custom deployment</li>
+                    <li>✓ SLA guarantee</li>
+                </ul>
+                <button class="pricing-btn">Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item glass">
+                <button class="faq-question">
+                    <span>How does the free tier work?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>The free tier includes 10,000 API calls per month with no credit card required. Perfect for testing and small projects.</p>
+                </div>
+            </div>
+            <div class="faq-item glass">
+                <button class="faq-question">
+                    <span>Can I upgrade or downgrade anytime?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, you can change your plan at any time. Changes take effect immediately and we'll prorate any charges.</p>
+                </div>
+            </div>
+            <div class="faq-item glass">
+                <button class="faq-question">
+                    <span>What models do you support?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>We support GPT-4, GPT-3.5, DALL-E 3, Stable Diffusion, and custom fine-tuned models on Pro and Enterprise plans.</p>
+                </div>
+            </div>
+            <div class="faq-item glass">
+                <button class="faq-question">
+                    <span>Is my data secure?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely. We use end-to-end encryption, are SOC 2 compliant, and never train models on your data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="newsletter-content glass">
+            <h2>Stay Updated</h2>
+            <p>Get the latest updates on new features and AI insights</p>
+            <form class="newsletter-form" id="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="logo">Neural</div>
+                <p>Building the future of AI</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#demo">Demo</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+                <a href="#">Careers</a>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <a href="#">Documentation</a>
+                <a href="#">API Reference</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Neural. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <button class="scroll-top" aria-label="Scroll to top">↑</button>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
