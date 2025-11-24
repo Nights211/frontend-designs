@@ -232,8 +232,158 @@ document.getElementById('newsletter-form').addEventListener('submit', (e) => {
 // Pricing buttons
 document.querySelectorAll('.pricing-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        showToast('Redirecting to signup...');
+        const plan = btn.dataset.plan;
+        if (plan === 'enterprise') {
+            openModal('contact-modal');
+        } else {
+            openModal('signup-modal');
+        }
     });
+});
+
+// Nav CTA button
+document.querySelector('.nav-cta').addEventListener('click', () => {
+    openModal('signup-modal');
+});
+
+// Modal functions
+const openModal = (modalId) => {
+    const modal = document.getElementById(modalId);
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+};
+
+const closeModal = (modal) => {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+};
+
+// Close modal buttons
+document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+        closeModal(btn.closest('.modal'));
+    });
+});
+
+// Close modal on backdrop click
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal(modal);
+        }
+    });
+});
+
+// Switch between login and signup
+document.getElementById('switch-to-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    closeModal(document.getElementById('signup-modal'));
+    openModal('login-modal');
+});
+
+document.getElementById('switch-to-signup').addEventListener('click', (e) => {
+    e.preventDefault();
+    closeModal(document.getElementById('login-modal'));
+    openModal('signup-modal');
+});
+
+// Forgot password
+document.getElementById('forgot-password').addEventListener('click', (e) => {
+    e.preventDefault();
+    showToast('Password reset link sent to your email!');
+});
+
+// Signup form
+document.getElementById('signup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    showToast('Account created successfully! Welcome to Neural.');
+    closeModal(document.getElementById('signup-modal'));
+    e.target.reset();
+});
+
+// Login form
+document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    showToast('Welcome back! Redirecting to dashboard...');
+    closeModal(document.getElementById('login-modal'));
+    e.target.reset();
+});
+
+// Contact form
+document.getElementById('contact-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    showToast('Thanks for reaching out! Our team will contact you within 24 hours.');
+    closeModal(document.getElementById('contact-modal'));
+    e.target.reset();
+});
+
+// Footer links
+document.querySelectorAll('.footer-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const action = link.dataset.action;
+        
+        switch(action) {
+            case 'docs':
+                openModal('docs-modal');
+                break;
+            case 'api':
+                openModal('api-modal');
+                break;
+            case 'support':
+                showToast('Opening support chat...');
+                setTimeout(() => {
+                    showToast('Support: How can we help you today?');
+                }, 1500);
+                break;
+            case 'about':
+                showToast('Neural was founded in 2024 to democratize AI access.');
+                break;
+            case 'blog':
+                showToast('Redirecting to blog...');
+                break;
+            case 'careers':
+                showToast('We\'re hiring! Check out our open positions.');
+                break;
+        }
+    });
+});
+
+// Documentation navigation
+document.querySelectorAll('.docs-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetDoc = link.dataset.doc;
+        
+        // Update active link
+        document.querySelectorAll('.docs-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        
+        // Show target section
+        document.querySelectorAll('.doc-section').forEach(section => {
+            if (section.dataset.section === targetDoc) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+    });
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    // ESC to close modals
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(modal => {
+            closeModal(modal);
+        });
+    }
+    
+    // Ctrl/Cmd + K to open docs
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        openModal('docs-modal');
+    }
 });
 
 // Intersection Observer for animations

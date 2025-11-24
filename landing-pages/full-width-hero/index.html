@@ -236,7 +236,7 @@ print(response.text)</code></pre>
                     <li>✓ Basic analytics</li>
                     <li>✗ Custom models</li>
                 </ul>
-                <button class="pricing-btn">Start Free</button>
+                <button class="pricing-btn" data-plan="starter">Start Free</button>
             </div>
             <div class="pricing-card glass featured">
                 <span class="popular-badge">Popular</span>
@@ -248,7 +248,7 @@ print(response.text)</code></pre>
                     <li>✓ Advanced analytics</li>
                     <li>✓ Custom models</li>
                 </ul>
-                <button class="pricing-btn primary">Get Started</button>
+                <button class="pricing-btn primary" data-plan="pro">Get Started</button>
             </div>
             <div class="pricing-card glass">
                 <h3>Enterprise</h3>
@@ -259,7 +259,7 @@ print(response.text)</code></pre>
                     <li>✓ Custom deployment</li>
                     <li>✓ SLA guarantee</li>
                 </ul>
-                <button class="pricing-btn">Contact Sales</button>
+                <button class="pricing-btn" data-plan="enterprise">Contact Sales</button>
             </div>
         </div>
     </section>
@@ -331,15 +331,15 @@ print(response.text)</code></pre>
             </div>
             <div class="footer-col">
                 <h4>Company</h4>
-                <a href="#">About</a>
-                <a href="#">Blog</a>
-                <a href="#">Careers</a>
+                <a href="#" class="footer-link" data-action="about">About</a>
+                <a href="#" class="footer-link" data-action="blog">Blog</a>
+                <a href="#" class="footer-link" data-action="careers">Careers</a>
             </div>
             <div class="footer-col">
                 <h4>Resources</h4>
-                <a href="#">Documentation</a>
-                <a href="#">API Reference</a>
-                <a href="#">Support</a>
+                <a href="#" class="footer-link" data-action="docs">Documentation</a>
+                <a href="#" class="footer-link" data-action="api">API Reference</a>
+                <a href="#" class="footer-link" data-action="support">Support</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -350,6 +350,165 @@ print(response.text)</code></pre>
     <button class="scroll-top" aria-label="Scroll to top">↑</button>
 
     <div class="toast" id="toast"></div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content glass">
+            <button class="modal-close">&times;</button>
+            <h2>Start Your Free Trial</h2>
+            <p>No credit card required. Get started in seconds.</p>
+            <form class="modal-form" id="signup-form">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password (min 8 characters)" required minlength="8">
+                <label class="checkbox-label">
+                    <input type="checkbox" required>
+                    <span>I agree to the Terms of Service and Privacy Policy</span>
+                </label>
+                <button type="submit" class="modal-btn">Create Account</button>
+            </form>
+            <p class="modal-footer">Already have an account? <a href="#" id="switch-to-login">Sign in</a></p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content glass">
+            <button class="modal-close">&times;</button>
+            <h2>Welcome Back</h2>
+            <p>Sign in to your Neural account</p>
+            <form class="modal-form" id="login-form">
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" id="forgot-password">Forgot password?</a>
+                </div>
+                <button type="submit" class="modal-btn">Sign In</button>
+            </form>
+            <p class="modal-footer">Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
+        </div>
+    </div>
+
+    <!-- Documentation Modal -->
+    <div class="modal" id="docs-modal">
+        <div class="modal-content glass large">
+            <button class="modal-close">&times;</button>
+            <h2>API Documentation</h2>
+            <div class="docs-content">
+                <div class="docs-sidebar">
+                    <h3>Quick Start</h3>
+                    <a href="#" class="docs-link active" data-doc="installation">Installation</a>
+                    <a href="#" class="docs-link" data-doc="authentication">Authentication</a>
+                    <a href="#" class="docs-link" data-doc="examples">Examples</a>
+                    <h3>API Reference</h3>
+                    <a href="#" class="docs-link" data-doc="endpoints">Endpoints</a>
+                    <a href="#" class="docs-link" data-doc="models">Models</a>
+                    <a href="#" class="docs-link" data-doc="errors">Error Codes</a>
+                </div>
+                <div class="docs-main">
+                    <div class="doc-section active" data-section="installation">
+                        <h3>Installation</h3>
+                        <p>Install the Neural SDK using pip:</p>
+                        <pre><code>pip install neural-sdk</code></pre>
+                        <p>Or using npm for JavaScript:</p>
+                        <pre><code>npm install @neural/sdk</code></pre>
+                    </div>
+                    <div class="doc-section" data-section="authentication">
+                        <h3>Authentication</h3>
+                        <p>Get your API key from the dashboard and authenticate:</p>
+                        <pre><code>import neural
+client = neural.Client(api_key="your_api_key_here")</code></pre>
+                    </div>
+                    <div class="doc-section" data-section="examples">
+                        <h3>Examples</h3>
+                        <p>Generate text with GPT-4:</p>
+                        <pre><code>response = client.generate(
+    prompt="Write a haiku about AI",
+    model="gpt-4",
+    max_tokens=50
+)
+print(response.text)</code></pre>
+                    </div>
+                    <div class="doc-section" data-section="endpoints">
+                        <h3>API Endpoints</h3>
+                        <p><strong>POST</strong> /v1/generate - Generate text</p>
+                        <p><strong>POST</strong> /v1/images - Generate images</p>
+                        <p><strong>GET</strong> /v1/models - List available models</p>
+                    </div>
+                    <div class="doc-section" data-section="models">
+                        <h3>Available Models</h3>
+                        <p><strong>gpt-4</strong> - Most capable model</p>
+                        <p><strong>gpt-3.5-turbo</strong> - Fast and efficient</p>
+                        <p><strong>dall-e-3</strong> - Image generation</p>
+                    </div>
+                    <div class="doc-section" data-section="errors">
+                        <h3>Error Codes</h3>
+                        <p><strong>400</strong> - Bad Request</p>
+                        <p><strong>401</strong> - Unauthorized</p>
+                        <p><strong>429</strong> - Rate Limit Exceeded</p>
+                        <p><strong>500</strong> - Server Error</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content glass">
+            <button class="modal-close">&times;</button>
+            <h2>Contact Sales</h2>
+            <p>Get in touch with our team for enterprise solutions</p>
+            <form class="modal-form" id="contact-form">
+                <input type="text" placeholder="Company Name" required>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="tel" placeholder="Phone Number">
+                <select required>
+                    <option value="">Company Size</option>
+                    <option value="1-10">1-10 employees</option>
+                    <option value="11-50">11-50 employees</option>
+                    <option value="51-200">51-200 employees</option>
+                    <option value="201+">201+ employees</option>
+                </select>
+                <textarea placeholder="Tell us about your needs" rows="4" required></textarea>
+                <button type="submit" class="modal-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- API Reference Modal -->
+    <div class="modal" id="api-modal">
+        <div class="modal-content glass large">
+            <button class="modal-close">&times;</button>
+            <h2>API Reference</h2>
+            <div class="api-content">
+                <div class="api-endpoint">
+                    <h3>Generate Text</h3>
+                    <span class="method">POST</span>
+                    <code>/v1/generate</code>
+                    <h4>Request Body</h4>
+                    <pre><code>{
+  "prompt": "string",
+  "model": "gpt-4",
+  "max_tokens": 100,
+  "temperature": 0.7
+}</code></pre>
+                    <h4>Response</h4>
+                    <pre><code>{
+  "id": "gen_123abc",
+  "text": "Generated text...",
+  "tokens_used": 45,
+  "model": "gpt-4"
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
