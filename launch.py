@@ -221,29 +221,14 @@ def interactive_menu():
     while True:
         examples = find_examples()
         
-        # Build menu options with prefix + number (e.g., l1, b1)
-        options = {}  # prefix+number -> (type, name)
-        prefixes = {
-            'landing': 'l',
-            'blog': 'b',
-            'portfolio': 'p',
-            'shopping': 'sh'
-        }
-        
-        import re
-        for typ in ['landing', 'blog', 'portfolio', 'shopping']:
-            for ex in examples[typ]:
-                # Extract number from name (e.g., landing-page-03 -> 3)
-                match = re.search(r'-(\d+)$', ex)
-                if match:
-                    num = str(int(match.group(1)))  # Strip leading zeros
-                    key = f"{prefixes[typ]}{num}"
-                    options[key] = (typ, ex)
+        # Build menu options with sequential numbers
+        options = {}  # number -> (type, name)
+        counter = 1
         
         # Check if backend exists
         backend_exists = (BASE_DIR / 'backend' / 'main.py').exists()
         
-        if not options and not backend_exists:
+        if not any(examples.values()) and not backend_exists:
             print("❌ No examples found")
             return
         
@@ -261,22 +246,20 @@ def interactive_menu():
             if examples[typ]:
                 print(f"{section_names[typ]}:")
                 for ex in examples[typ]:
-                    match = re.search(r'-(\d+)$', ex)
-                    if match:
-                        num = str(int(match.group(1)))  # Strip leading zeros
-                        key = f"{prefixes[typ]}{num}"
-                        print(f"  {key:>3}. {ex}")
+                    options[str(counter)] = (typ, ex)
+                    print(f"  {counter}. {ex}")
+                    counter += 1
                 print()  # Blank line after each section
         
         if backend_exists:
             print("Backend:")
-            print(f"   99. FastAPI Backend\n")
+            print(f"  99. FastAPI Backend\n")
         
         print("   0. Exit\n")
         
         # Get user choice
         try:
-            choice = input("Select an option: ").strip().lower()
+            choice = input("Select an option: ").strip()
             
             if choice == '0':
                 print("👋 Goodbye!")
