@@ -40,6 +40,29 @@ def stop_backend():
         except subprocess.TimeoutExpired:
             backend_process.kill()
 
+def launch_simple_server(example_path):
+    """Launch simple HTTP server"""
+    os.chdir(example_path)
+    try:
+        webbrowser.open('http://localhost:8000')
+    except:
+        pass
+    
+    process = None
+    try:
+        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'], 
+                                   stdout=subprocess.DEVNULL, 
+                                   stderr=subprocess.DEVNULL)
+        process.wait()
+    except KeyboardInterrupt:
+        if process:
+            process.terminate()
+            try:
+                process.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                process.kill()
+        print("\n\n✅ Server stopped")
+
 atexit.register(stop_backend)
 
 def find_examples():
@@ -118,27 +141,8 @@ def launch_landing(example_name):
     
     print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
-    print("Press Ctrl+C to stop and return to menu\n")
-    
-    os.chdir(example_path)
-    
-    try:
-        webbrowser.open('http://localhost:8000')
-    except:
-        pass
-    
-    process = None
-    try:
-        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'])
-        process.wait()
-    except KeyboardInterrupt:
-        if process:
-            process.terminate()
-            try:
-                process.wait(timeout=2)
-            except subprocess.TimeoutExpired:
-                process.kill()
-        print("\n\n✅ Server stopped")
+    print("Press Ctrl+C to stop\n")
+    launch_simple_server(example_path)
 
 def launch_blog(example_name):
     """Launch blog page example"""
@@ -152,23 +156,8 @@ def launch_blog(example_name):
     
     print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
-    print("Press Ctrl+C to stop and return to menu\n")
-    
-    os.chdir(example_path)
-    
-    try:
-        webbrowser.open('http://localhost:8000')
-    except:
-        pass
-    
-    process = None
-    try:
-        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'])
-        process.wait()
-    except KeyboardInterrupt:
-        if process:
-            process.terminate()
-        print("\n\n✅ Server stopped")
+    print("Press Ctrl+C to stop\n")
+    launch_simple_server(example_path)
 
 def launch_portfolio(example_name):
     """Launch portfolio page example"""
@@ -182,27 +171,8 @@ def launch_portfolio(example_name):
     
     print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
-    print("Press Ctrl+C to stop and return to menu\n")
-    
-    os.chdir(example_path)
-    
-    try:
-        webbrowser.open('http://localhost:8000')
-    except:
-        pass
-    
-    process = None
-    try:
-        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'])
-        process.wait()
-    except KeyboardInterrupt:
-        if process:
-            process.terminate()
-            try:
-                process.wait(timeout=2)
-            except subprocess.TimeoutExpired:
-                process.kill()
-        print("\n\n✅ Server stopped")
+    print("Press Ctrl+C to stop\n")
+    launch_simple_server(example_path)
 
 def launch_shopping(example_name):
     """Launch shopping page example"""
@@ -216,27 +186,8 @@ def launch_shopping(example_name):
     
     print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
-    print("Press Ctrl+C to stop and return to menu\n")
-    
-    os.chdir(example_path)
-    
-    try:
-        webbrowser.open('http://localhost:8000')
-    except:
-        pass
-    
-    process = None
-    try:
-        process = subprocess.Popen(['python3', '-m', 'http.server', '8000'])
-        process.wait()
-    except KeyboardInterrupt:
-        if process:
-            process.terminate()
-            try:
-                process.wait(timeout=2)
-            except subprocess.TimeoutExpired:
-                process.kill()
-        print("\n\n✅ Server stopped")
+    print("Press Ctrl+C to stop\n")
+    launch_simple_server(example_path)
 
 def launch_backend():
     """Launch FastAPI backend"""

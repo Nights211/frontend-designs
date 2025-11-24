@@ -101,6 +101,14 @@ nav a:hover {
     border: 1px solid #ddd;
     border-radius: 8px;
     text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    border-color: #667eea;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .feature h3 {
