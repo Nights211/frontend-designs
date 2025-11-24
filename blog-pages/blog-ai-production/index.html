@@ -22,10 +22,17 @@
         <p>&copy; 2025 AI Blog</p>
     </footer>
     <script>
-        fetch('content.md')
-            .then(r => r.text())
-            .then(md => {
-                document.getElementById('content').innerHTML = marked.parse(md);
+        const API_URL = 'http://localhost:8001/api';
+        const POST_ID = 3;
+
+        fetch(`${API_URL}/posts/${POST_ID}`)
+            .then(r => r.json())
+            .then(post => {
+                document.getElementById('content').innerHTML = marked.parse(post.content);
+            })
+            .catch(() => {
+                document.getElementById('content').innerHTML = 
+                    '<p>⚠️ Backend not running. Start it with: ./launch.py backend</p>';
             });
     </script>
 </body>

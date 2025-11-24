@@ -20,7 +20,7 @@
     </header>
     <div class="hero">
         <div class="hero-content">
-            <span class="category">Architecture</span>
+            <span class="category" id="hero-category">Loading...</span>
             <h2 id="hero-title">Loading...</h2>
         </div>
     </div>
@@ -28,16 +28,24 @@
         <article id="content"></article>
     </main>
     <script>
-        fetch('content.md')
-            .then(r => r.text())
-            .then(md => {
-                const html = marked.parse(md);
+        const API_URL = 'http://localhost:8001/api';
+        const POST_ID = 5;
+
+        fetch(`${API_URL}/posts/${POST_ID}`)
+            .then(r => r.json())
+            .then(post => {
+                const html = marked.parse(post.content);
                 document.getElementById('content').innerHTML = html;
                 const title = document.querySelector('#content h1');
                 if (title) {
                     document.getElementById('hero-title').textContent = title.textContent;
                     title.remove();
                 }
+                document.getElementById('hero-category').textContent = post.category;
+            })
+            .catch(() => {
+                document.getElementById('content').innerHTML = 
+                    '<p>⚠️ Backend not running. Start it with: ./launch.py backend</p>';
             });
     </script>
 </body>
