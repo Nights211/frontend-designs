@@ -356,6 +356,17 @@ input:checked + .slider:before {
     box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
 }
 
+.badge-inline {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
 .card-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
