@@ -1,5 +1,6 @@
 node_modules/
 venv/
+.venv/
 __pycache__/
 *.pyc
 .env
@@ -7,3 +8,6 @@ dist/
 build/
 *.db
 .DS_Store
+.python-version
+uv.lock
+.direnv/

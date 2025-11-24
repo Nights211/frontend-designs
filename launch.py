@@ -4,9 +4,43 @@ import sys
 import webbrowser
 import subprocess
 import signal
+import time
+import atexit
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
+backend_process = None
+
+def start_backend():
+    """Start backend in background"""
+    global backend_process
+    backend_path = BASE_DIR / 'backend'
+    app_file = backend_path / 'app.py'
+    
+    if not app_file.exists():
+        return
+    
+    print("🔧 Starting backend...")
+    backend_process = subprocess.Popen(
+        ['uvicorn', 'app:app', '--host', '127.0.0.1', '--port', '8001'],
+        cwd=backend_path,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+    time.sleep(1)  # Give backend time to start
+    print("✅ Backend running at http://localhost:8001\n")
+
+def stop_backend():
+    """Stop backend process"""
+    global backend_process
+    if backend_process:
+        backend_process.terminate()
+        try:
+            backend_process.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            backend_process.kill()
+
+atexit.register(stop_backend)
 
 def find_examples():
     """Find all examples in the repo"""
@@ -80,7 +114,9 @@ def launch_landing(example_name):
         print(f"❌ Example '{example_name}' not found")
         return
     
-    print(f"\n🚀 Launching {example_name}...")
+    start_backend()
+    
+    print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
     print("Press Ctrl+C to stop and return to menu\n")
     
@@ -112,7 +148,9 @@ def launch_blog(example_name):
         print(f"❌ Example '{example_name}' not found")
         return
     
-    print(f"\n🚀 Launching {example_name}...")
+    start_backend()
+    
+    print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
     print("Press Ctrl+C to stop and return to menu\n")
     
@@ -140,7 +178,9 @@ def launch_portfolio(example_name):
         print(f"❌ Example '{example_name}' not found")
         return
     
-    print(f"\n🚀 Launching {example_name}...")
+    start_backend()
+    
+    print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
     print("Press Ctrl+C to stop and return to menu\n")
     
@@ -172,7 +212,9 @@ def launch_shopping(example_name):
         print(f"❌ Example '{example_name}' not found")
         return
     
-    print(f"\n🚀 Launching {example_name}...")
+    start_backend()
+    
+    print(f"🚀 Launching {example_name}...")
     print("📡 Server running at http://localhost:8000")
     print("Press Ctrl+C to stop and return to menu\n")
     
