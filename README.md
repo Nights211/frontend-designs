@@ -1,70 +1,75 @@
 # Frontend Designs
 
-A reference library of frontend UI designs and examples for AI projects.
+A reference library of frontend UI designs for testing different visual styles and layouts. Each design is self-contained and can be viewed in a browser.
 
-## Purpose
+## Quick Start
 
-This repository contains various frontend designs and UI patterns that can be referenced when building AI-related projects. All examples use HTML/CSS/JavaScript.
+```bash
+# Interactive menu - pick a design to launch
+./launch.py
 
-## Tech Stack
+# Or launch directly by category and name
+./launch.py landing <design-name>
+./launch.py blog <design-name>
+./launch.py portfolio <design-name>
+./launch.py shopping <design-name>
 
-**Frontends:**
-- HTML/CSS/JavaScript
+# List all available examples
+./launch.py list
 
-**Backend:**
-- FastAPI (Python)
-- SQLite (for database examples)
+# Start just the backend API
+./launch.py backend
+```
+
+The launcher starts a local HTTP server on port 8000 and opens your browser. Designs that need the backend API will auto-start it on port 8001.
+
+## Adding a New Design
+
+1. Create a directory under the right category folder:
+   ```
+   landing-pages/my-new-design/
+   blog-pages/my-new-design/
+   portfolio-pages/my-new-design/
+   shopping-pages/my-new-design/
+   ```
+
+2. Add at minimum `index.html` and `style.css`. The launcher auto-discovers new directories.
+
+3. Optionally add a `README.md` describing the design.
+
+4. If the design needs dynamic data, fetch from `http://localhost:8001/api/...` (posts, products, projects, users).
 
 ## Structure
 
 ```
 frontend-designs/
-├── landing-pages/      # Landing page designs
-├── blog-pages/         # Blog post designs
-├── portfolio-pages/    # Portfolio page designs
-├── shopping-pages/     # E-commerce page designs
-├── backend/            # Shared FastAPI backend with SQLite
-├── SETUP.md            # Setup instructions
-└── README.md           # This file
+├── landing-pages/          # Landing page designs
+├── blog-pages/             # Blog post designs
+├── portfolio-pages/        # Portfolio page designs
+├── shopping-pages/         # E-commerce page designs
+├── backend/                # Shared FastAPI backend + SQLite
+│   ├── app.py              # REST API endpoints
+│   ├── init_db.py          # Database schema + seed data
+│   └── database.db         # SQLite database
+├── launch.py               # Launcher script (interactive or CLI)
+├── kill-servers.py         # Kill servers on ports 8000/8001
+├── SETUP.md                # Detailed setup instructions
+└── README.md               # This file
 ```
 
-## Quick Start
+## Tech Stack
 
-See [SETUP.md](SETUP.md) for installation and setup instructions.
+- **Frontends:** HTML, CSS, vanilla JavaScript
+- **Backend:** FastAPI + SQLite (Python)
+- **Content:** Some designs use `marked.js` to render markdown files
+- **Tooling:** `uv` for Python deps, `direnv` for auto-activating venv
 
-### Launcher Script
+## Hard Refresh
 
-Use the launcher script to quickly run examples:
+If changes don't appear in the browser:
+- **Windows/Linux:** `Ctrl + Shift + R`
+- **Mac:** `Cmd + Shift + R`
 
-```bash
-# List all examples
-./launch.py list
+## Setup
 
-# Launch landing page
-./launch.py landing <example-name>
-
-# Launch blog page
-./launch.py blog <example-name>
-
-# Launch portfolio page
-./launch.py portfolio <example-name>
-
-# Launch shopping page
-./launch.py shopping <example-name>
-
-# Start backend
-./launch.py backend
-
-# Interactive menu (just run without arguments)
-./launch.py
-```
-
-### Hard Refresh
-
-If you make changes to HTML/CSS/JS files and don't see updates in your browser, you may need to hard refresh:
-
-- **Windows/Linux**: `Ctrl + Shift + R` or `Ctrl + F5`
-- **Mac**: `Cmd + Shift + R`
-- **Alternative**: Open DevTools (`F12`) and right-click the refresh button, select "Empty Cache and Hard Reload"
-
-Each design example is self-contained in its own directory with its own README.
+See [SETUP.md](SETUP.md) for prerequisites and installation.
